@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Simple stream page</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .video-block {
+            margin-top: 20px;
+            width: 90%;
+            max-width: 768px;
+            text-align: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #353535;
+            border-radius: 8px;
+        }
+
+        .video-block img {
+            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        .arrows {
+            margin-top: 40px;
+            display: grid;
+            grid-template-areas:
+                ". up ."
+                "left . right"
+                ". down .";
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .arrows .up {
+            grid-area: up;
+        }
+
+        .arrows .left {
+            grid-area: left;
+        }
+
+        .arrows .down {
+            grid-area: down;
+        }
+
+        .arrows .right {
+            grid-area: right;
+        }
+
+        .arrow {
+            padding: 20px 40px;
+            font-size: 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .arrow:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        async function sendCommand(direction) {
+            try {
+                const response = await fetch(`/${direction}`);
+                if (response.ok) {
+                    console.log(`Command sent: ${direction}`);
+                } else {
+                    console.error(`Error sending command: ${response.statusText}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="video-block">
+        <img alt="Video stream" src="http://192.168.1.36:81/stream" />
+    </div>
+
+    <div class="arrows">
+        <button class="arrow up" onclick="sendCommand('up')">Haut</button>
+        <button class="arrow left" onclick="sendCommand('left')">Gauche</button>
+        <button class="arrow down" onclick="sendCommand('down')">Bas</button>
+        <button class="arrow right" onclick="sendCommand('right')">Droit</button>
+    </div>
+</body>
+
+</html>
